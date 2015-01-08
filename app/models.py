@@ -21,18 +21,18 @@ class StoreFront(db.Model):
     __tablename__ = 'storefronts'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64), unique=True)
+    phone = db.Column(db.String(15))
     contact_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     address_id = db.Column(db.Integer, db.ForeignKey('addresses.id'))
-    phone = db.Column(db.String(db.String(15))
 
 class Address(db.Model):
+    __tablename__ = 'addresses'
     id = db.Column(db.Integer, primary_key=True)
     line1 = db.Column(db.String(64))
     line2 = db.Column(db.String(64))
     city = db.Column(db.String(64))
     state = db.Column(db.String(2))
     zipcode = db.Column(db.String(10))
-
 
 class Role(db.Model):
     __tablename__ = 'roles'
@@ -242,4 +242,3 @@ login_manager.anonymous_user = AnonymousUser
 def load_user(user_id):
     return User.query.get(int(user_id))
 
-db.event.listen(Comment.body, 'set', Comment.on_changed_body)

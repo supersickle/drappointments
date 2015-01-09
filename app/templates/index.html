@@ -2,12 +2,16 @@
 {% import "bootstrap/wtf.html" as wtf %}
 {% import "_macros.html" as macros %}
 
-{% block title %}DR Appointment{% endblock %}
+{% block title %}Doctor Roscoe's Bike Repair Appointments{% endblock %}
 
 {% block page_content %}
 <div class="page-header">
     <h1>Hello, {% if current_user.is_authenticated() %}{{ current_user.username }}{% else %}Stranger{% endif %}!</h1>
+    <h2>{% if current_user.is_authenticated() %}Thanks for using appointments
+      {% else %}<a href="{{ url_for('auth.register') }}">Please Register Here</a>{% endif %}!</h2>
+    <p><a href="http://doctorroscoesbikes.com">Return to the Dr Roscoe Website</a>.</p>
 </div>
+
 {% endblock %}
 
 {% block scripts %}

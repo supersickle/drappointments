@@ -49,8 +49,8 @@ class Role(db.Model):
                      Permission.MANAGEUSER |
                      Permission.MANAGEBIKE, True),
             'Provider': (Permission.VIEW |
-                          Permission.MANAGEUSER |
-                          Permission.MANAGESTORE, False),
+                         Permission.MANAGEUSER |
+                         Permission.MANAGESTORE, False),
             'Administrator': (0xff, False)
         }
         for r in roles:

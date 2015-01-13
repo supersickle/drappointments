@@ -3,7 +3,7 @@ from flask import render_template, redirect, url_for, abort, flash, request,\
 from flask.ext.login import login_required, current_user
 from flask.ext.sqlalchemy import get_debug_queries
 from . import main
-from .forms import EditProfileForm, EditProfileAdminForm
+from .forms import EditProfileForm, EditProfileAdminForm, RegisterBikeForm
 from .. import db
 from ..models import Permission, Role, User
 from ..decorators import admin_required, permission_required
@@ -60,6 +60,14 @@ def edit_profile():
     return render_template('edit_profile.html', form=form)
 
 
+@main.route('/register-bike', methods=['GET', 'POST'])
+@login_required
+def register_bike():
+    form = RegisterBikeForm()
+    if form.validate_on_submit():
+        return redirect(url_for('.user', username=current_user.username))
+    return render_template('register_bike.html', form=form)
+        
 @main.route('/edit-profile/<int:id>', methods=['GET', 'POST'])
 @login_required
 @admin_required

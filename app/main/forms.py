@@ -28,7 +28,7 @@ class RegisterBikeForm(Form):
     gears = SelectField('How many speeds are on your rear derailer?', coerce=int)
     submit = SubmitField('Submit')
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, user_id, *args, **kwargs):
       super(RegisterBikeForm, self).__init__(*args, **kwargs)
       self.style.choices = [(1, 'Very Aggressive'), (2, 'Aggressive'), (3, 'Moderate'),
                             (4, 'Casual'),(5, 'Light')]

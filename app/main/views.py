@@ -5,9 +5,8 @@ from flask.ext.sqlalchemy import get_debug_queries
 from . import main
 from .forms import EditProfileForm, EditProfileAdminForm, RegisterBikeForm
 from .. import db
-from ..models import Permission, Role, User
+from ..models import Permission, Role, User, BikeUsage
 from ..decorators import admin_required, permission_required
-
 
 @main.after_app_request
 def after_request(response):
@@ -63,10 +62,30 @@ def edit_profile():
 @main.route('/register-bike', methods=['GET', 'POST'])
 @login_required
 def register_bike():
-    form = RegisterBikeForm()
+    ridertype = BikeUsage.query.filter_by(user_id=current_user.id).first()
+    if ridertype is None:
+        ridertype =  BikeUsage()
+    form = RegisterBikeForm(current_user.id)
     if form.validate_on_submit():
+        ridertype.weight = form.weight.data
+        ridertype.style = form.style.data
+        ridertype.terrain = form.terrain.data
+        ridertype.duration = form.duration.data
+        ridertype.cleaning = form.cleaning.data
+        ridertype.conditions = form.conditions.data
+        ridertype.gears = form.gears.data
+        ridertype.user_id = current_user.id
+        db.session.add(ridertype)
+        flash('Your bike usage data has been added.')
         return redirect(url_for('.user', username=current_user.username))
-    return render_template('register_bike.html', form=form)
+    form.weight.data = ridertype.weight
+    form.style.data = ridertype.style 
+    form.terrain.data = ridertype.terrain 
+    form.duration.data = ridertype.duration 
+    form.cleaning.data = ridertype.cleaning 
+    form.conditions.data = ridertype.conditions 
+    form.gears.data = ridertype.gears 
+    return render_template('register_bike.html', form=form, user_id=current_user.id)
         
 @main.route('/edit-profile/<int:id>', methods=['GET', 'POST'])
 @login_required

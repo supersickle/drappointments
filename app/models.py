@@ -34,6 +34,18 @@ class Address(db.Model):
     state = db.Column(db.String(2))
     zipcode = db.Column(db.String(10))
 
+class BikeUsage(db.Model):
+    __tablename__ = 'bikeusages'
+    id = db.Column(db.Integer, primary_key=True)
+    weight = db.Column(db.Integer)
+    style = db.Column(db.Integer)
+    terrain = db.Column(db.Integer)
+    duration = db.Column(db.Float)
+    cleaning = db.Column(db.Integer)
+    conditions = db.Column(db.Integer)
+    gears = db.Column(db.Integer)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+
 class Role(db.Model):
     __tablename__ = 'roles'
     id = db.Column(db.Integer, primary_key=True)

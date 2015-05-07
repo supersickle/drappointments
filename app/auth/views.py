@@ -70,6 +70,7 @@ def confirm(token):
         return redirect(url_for('main.index'))
     if current_user.confirm(token):
         flash('You have confirmed your account. Thanks!')
+        return redirect(url_for('main.register_bike'))
     else:
         flash('The confirmation link is invalid or has expired.')
     return redirect(url_for('main.index'))
